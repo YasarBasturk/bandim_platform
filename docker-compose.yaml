@@ -1,0 +1,43 @@
+# Docker Compose file Reference: https://docs.docker.com/compose/compose-file/compose-file-v3/
+version: '3.9'
+
+services:
+
+  bandim-fastapi:
+    restart: always
+
+    container_name: bandim-api
+    build:
+      context: ./backend
+      dockerfile: ./Dockerfile
+    # env_file: ./bandim-fastapi.env
+    ports:
+      - "8000:8000" #Port mapping: HOST:CONTAINER
+    volumes:
+      - bandim_db:/bandim.db:rw
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "10m"
+
+  redis:
+    restart: always
+    image: redis:latest
+    container_name: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - redis_data:/data:rw
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "10m"
+
+volumes:
+  nginx_secrets:
+  bandim_db:
+  redis_data:
+
+

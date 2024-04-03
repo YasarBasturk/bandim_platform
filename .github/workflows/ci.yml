@@ -1,0 +1,80 @@
+on:
+  push:
+    branches:
+      - "main"
+    # Publish semver tags as releases
+    # tags:
+    #   - 'v*.*.*'
+
+env:
+  # Use github's container registry
+  REGISTRY: ghcr.io
+  # github.repository as <account>/<repo>
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  # check-code-quality:
+  #   name: "Check coding standards"
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+
+  #     - name: Install poetry
+  #       run: pipx install poetry
+
+  #     - uses: actions/setup-python@v4
+  #       with:
+  #         python-version: 3.10
+  #         cache: poetry
+
+  #     - name: "Install python dependencies"
+  #       run: poetry install
+
+  #     - name: "Check code formatting"
+  #       run: poetry run poe black-check
+
+  create-image:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v3
+
+      # https://github.com/docker/build-push-action
+      - name: "Setup docker buildx"
+        uses: docker/setup-buildx-action@v3
+
+      # Login against a Docker registry except on PRs
+      # https://github.com/docker/login-action
+      - name: "Log into registry: ${{ env.REGISTRY }}"
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Extract metadata (tags, labels) for Docker
+      # https://github.com/docker/metadata-action
+      - name: "Extract docker metadata"
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+
+      # Build and push Docker image with Buildx (do not push on PRs)
+      # https://github.com/docker/build-push-action
+      - name: "Build and push the docker image"
+        id: build-and-push
+        uses: docker/build-push-action@v5
+        with:
+          context: "{{defaultContext}}:backend"
+          push: ${{ github.event_name != 'pull_request' }} # Do not push on PRs
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
