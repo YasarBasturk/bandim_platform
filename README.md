@@ -10,7 +10,7 @@ sudo docker-compose build up;
 
 ## Start Frontend
 
-The example frontend page integrates a few of the endpoints of the backend for demonstration and testing purposes. To test the frontend page, run:
+The example frontend page integrates a few of the endpoints of the backend for demonstration and testing purposes. To test the frontend page, run these commands:
 
 ```bash
 cd frontend;
