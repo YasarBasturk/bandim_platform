@@ -14,7 +14,7 @@ The example frontend page integrates a few of the endpoints of the backend for d
 
 ```bash
 cd frontend;
-python -m http localhost 8080
+python -m http.server --bind localhost 8080
 ```
 
-Then point the browser to the address `localhost:8080` to test a couple of the endpoints...
+Then point the browser to the address `localhost:8080` or `127.0.0.1:8080` to test a couple of the endpoints...

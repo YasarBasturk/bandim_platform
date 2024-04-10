@@ -36,7 +36,7 @@ services:
         max-size: "10m"
 
 volumes:
-  nginx_secrets:
+  # nginx_secrets:
   bandim_db:
   redis_data:
 
