@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="../static/loginstyle.css" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-green">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <img src="../static/images/bandim.png" alt="bandim_image" class="logo" />
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-link active" aria-current="page" href="../templates/index.html">Routing</a>
+            <a class="nav-link" href="../templates/coworkers.html">Coworkers</a>
+            <a class="nav-link" href="../templates/patients.html">Patients</a>
+            <a class="nav-link" href="../templates/guidelines.html">Guidelines/Contact</a>
+
+            <button type="button" class="btn btn-logout d-lg-none" onclick="logout()">Logout</button>
+          </div>
+        </div>
+        <button type="button" class="btn btn-logout ml-auto btn-outline-dark d-none d-lg-block" onclick="logout()">Logout</button>
+      </div>
+    </nav>
+    
+  <div class="elements">
+    <div class="slidecontainer">
+      <input type="range" min="1" max="10" value="1" class="slider" id="myRange">
+      <p>Coworkers: <span id="demo"></span></p>
+
+      <select id="routes"></select>
+
+      <p style="font-size: 18px; margin-top: 18px; font-family: 'Times New Roman', Times, serif;"> Estimated distance: X km </p>
+      <p style="font-size: 18px; font-family: 'Times New Roman', Times, serif;"> Stops: Y </p>
+      <p style="font-size: 18px; font-family: 'Times New Roman', Times, serif;"> Estimated time: HH:MM </p>
+      <p style="font-size: 18px; font-family: 'Times New Roman', Times, serif;"> yyyy-mm-dd patientlist: </p>
+      <p style="font-family: 'Times New Roman', Times, serif;"> Patient 1 </p>
+      <p style="font-family: 'Times New Roman', Times, serif;"> Patient 2 </p>
+      <p style="font-family: 'Times New Roman', Times, serif;"> Patient 3 </p>
+      <p style="font-family: 'Times New Roman', Times, serif;"> Patient n </p>
+    </div>
+    
+      <iframe
+      class="googleMap"
+      src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d244.05334781588553!2d-15.595631676462247!3d11.84552212870657!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sda!2sdk!4v1710036431720!5m2!1sda!2sdk"
+      style="border: 0"
+      allowfullscreen=""
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+    ></iframe>
+    </div>
+  </div>
+
+    <footer class="footer2">Bandim Health Project © 2021</footer>
+
+    <script>
+  let slider = document.getElementById("myRange");
+  let output = document.getElementById("demo");
+  output.innerHTML = slider.value;
+
+  slider.oninput = function() {
+  output.innerHTML = this.value;
+}
+    </script>
+
+<script>
+  function updateDropdownOptions() {
+    let rangeValue = document.getElementById("myRange").value;
+    let dropdown = document.getElementById("routes");
+    dropdown.innerHTML = "";
+
+    /* loop from 1 to the value of the slider */
+    for (let i = 1; i <= rangeValue; i++) {
+      /* create an option element with text add it to the dropdown menu*/
+      dropdown.add(new Option("Route " + i, "option" + i));
+    }
+  }
+  /* eventlistener function when the range slide value changes and then call the functions*/
+  document.getElementById("myRange").addEventListener("input", updateDropdownOptions);
+  updateDropdownOptions();
+</script>
+    
+<script>
+  function logout() {
+    window.location.href = "../templates/login2.html";
+  }
+</script>
+  </body>
+</html>

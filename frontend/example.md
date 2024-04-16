@@ -1,3 +1,5 @@
+# Example provided by Nicklas
+```html
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -109,3 +111,4 @@
     <pre id="responseDisplay"></pre>
   </body>
 </html>
+```

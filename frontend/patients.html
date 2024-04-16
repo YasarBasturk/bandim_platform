@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/2.0.2/css/dataTables.bootstrap5.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.2/js/dataTables.bootstrap5.js"></script>
+    <link rel="stylesheet" href="../static/loginstyle.css" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-green">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <img src="../static/images/bandim.png" alt="bandim_image" class="logo" />
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-link" href="../templates/index.html">Routing</a>
+            <a class="nav-link" href="coworkers.html">Coworkers</a>
+            <a class="nav-link active" aria-current="page" href="patients.html">Patients</a>
+            <a class="nav-link" href="guidelines.html">Guidelines/Contact</a>
+            
+            <button type="button" class="btn btn-logout d-lg-none" onclick="logout()">Logout</button>
+          </div>
+        </div>
+        <button type="button" class="btn btn-logout ml-auto btn-outline-dark d-none d-lg-block" onclick="logout()">Logout</button>
+      </div>
+    </nav>
+
+    <table id="patients" class="table table-striped" style="width: 100%">
+      <thead>
+        <tr>
+          <th>PatientID</th>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Vaccinated</th>
+          <th>Longitude/latitude</th>
+          <th>Note to nurse</th>
+        </tr>
+      </thead>
+      <tbody id="editable" contenteditable="true">
+        <tr>
+          <td>1001</td>
+          <td>Adanna Okonkwo</td>
+          <td>36</td>
+          <td>2023-07-15</td>
+          <td>34.052235,-118.243683</td>
+          <td>FLECHR</td>
+        </tr>
+        <tr>
+          <td>1002</td>
+          <td>Chinwe Eze</td>
+          <td>45</td>
+          <td>2023-05-28</td>
+          <td>51.5074, -0.1278</td>
+          <td>FLECHR</td>
+        </tr>
+        <tr>
+          <td>1003</td>
+          <td>Kwame Mensah</td>
+          <td>22</td>
+          <td>2023-10-03</td>
+          <td>40.7128, -74.0060</td>
+          <td>JUTHEN</td>
+        </tr>
+        <tr>
+          <td>1004</td>
+          <td>Zainab Abubakar</td>
+          <td>29</td>
+          <td>2023-12-18</td>
+          <td>51.1657, 10.4515</td>
+          <td>WALANT</td>
+        </tr>
+        <tr>
+          <td>1005</td>
+          <td>Tariq Diop</td>
+          <td>39</td>
+          <td>2023-08-11</td>
+          <td>40.7128, -74.0060</td>
+          <td>SIMJEN</td>
+        </tr>
+        <tr>
+          <td>1006</td>
+          <td>Amara Sow</td>
+          <td>56</td>
+          <td>2023-06-02</td>
+          <td>48.8566, 2.3522</td>
+          <td>LISHOL</td>
+        </tr>
+        <tr>
+          <td>1007</td>
+          <td>Kwasi Ba</td>
+          <td>47</td>
+          <td>2023-09-05</td>
+          <td>37.7749, -122.4194</td>
+          <td>MARPOU</td>
+        </tr>
+        <tr>
+          <td>1008</td>
+          <td>Malaika Asante</td>
+          <td>34</td>
+          <td>2023-11-20</td>
+          <td>51.5074, -0.1278</td>
+          <td>BRIAND</td>
+        </tr>
+        <tr>
+          <td>1009</td>
+          <td>Kwame Yedan</td>
+          <td>26</td>
+          <td>2023-04-14</td>
+          <td>34.052235,-118.243683</td>
+          <td>VIVIVE</td>
+        </tr>
+        <tr>
+          <td>1010</td>
+          <td>Nia Kone</td>
+          <td>55</td>
+          <td>2023-02-01</td>
+          <td>48.8566, 2.3522</td>
+          <td>ESTNIE</td>
+        </tr>
+        <tr>
+          <td>1011</td>
+          <td>Amadi Adewale</td>
+          <td>47</td>
+          <td>2023-07-30</td>
+          <td>51.1657, 10.4515</td>
+          <td>MALALF</td>
+        </tr>
+        <tr>
+          <td>1012</td>
+          <td>Simba Fofana</td>
+          <td>41</td>
+          <td>2023-09-15</td>
+          <td>40.7128, -74.0060</td>
+          <td>FLECHR</td>
+        </tr>
+        <tr>
+          <td>1013</td>
+          <td>Adeola Bello</td>
+          <td>32</td>
+          <td>2023-11-28</td>
+          <td>48.8566, 2.3522</td>
+          <td>FLECHR</td>
+        </tr>
+        <tr>
+          <td>1014</td>
+          <td>Nala Okafor</td>
+          <td>29</td>
+          <td>2023-10-05</td>
+          <td>37.7749, -122.4194</td>
+          <td>FLECHR</td>
+        </tr>
+        <tr>
+          <td>1015</td>
+          <td>Lola Nwosu</td>
+          <td>24</td>
+          <td>2023-06-12</td>
+          <td>34.052235,-118.243683</td>
+          <td>JUTHEN</td>
+        </tr>
+        <tr>
+          <td>1016</td>
+          <td>Tunde Odumakin</td>
+          <td>38</td>
+          <td>2023-03-19</td>
+          <td>51.5074, -0.1278</td>
+          <td>WALANT</td>
+        </tr>
+        <tr>
+          <td>1017</td>
+          <td>Sade Adeleke</td>
+          <td>31</td>
+          <td>2023-05-08</td>
+          <td>40.7128, -74.0060</td>
+          <td>WALANT</td>
+        </tr>
+        <tr>
+          <td>1018</td>
+          <td>Adisa Balarabe</td>
+          <td>45</td>
+          <td>2023-09-23</td>
+          <td>48.8566, 2.3522</td>
+          <td>SIMJEN</td>
+        </tr>
+        <tr>
+          <td>1019</td>
+          <td>Ngozi Okeke</td>
+          <td>27</td>
+          <td>2023-08-30</td>
+          <td>37.7749, -122.4194</td>
+          <td>SIMJEN</td>
+        </tr>
+        <tr>
+          <td>1020</td>
+          <td>Amara Nwachukwu</td>
+          <td>59</td>
+          <td>2023-11-02</td>
+          <td>34.052235,-118.243683</td>
+          <td>SIMJEN</td>
+        </tr>
+        <tr>
+          <td>1021</td>
+          <td>Obi Oluwole</td>
+          <td>42</td>
+          <td>2023-07-17</td>
+          <td>51.5074, -0.1278</td>
+          <td>LISHOL</td>
+        </tr>
+        <tr>
+          <td>1022</td>
+          <td>Aminata Jallow</td>
+          <td>33</td>
+          <td>2023-04-05</td>
+          <td>40.7128, -74.0060</td>
+          <td>LISHOL</td>
+        </tr>
+        <tr>
+          <td>1023</td>
+          <td>Malik Kamara</td>
+          <td>49</td>
+          <td>2023-10-11</td>
+          <td>48.8566, 2.3522</td>
+          <td>LISHOL</td>
+        </tr>
+        <tr>
+          <td>1024</td>
+          <td>Mbali Mabaso</td>
+          <td>23</td>
+          <td>2023-12-29</td>
+          <td>37.7749, -122.4194</td>
+          <td>MARPOU</td>
+        </tr>
+        <tr>
+          <td>1025</td>
+          <td>Kwaku Amponsah</td>
+          <td>52</td>
+          <td>2023-06-25</td>
+          <td>34.052235,-118.243683</td>
+          <td>MARPOU</td>
+        </tr>
+        <tr>
+          <td>1026</td>
+          <td>Aisha Suleiman</td>
+          <td>37</td>
+          <td>2023-03-07</td>
+          <td>51.5074, -0.1278</td>
+          <td>MARPOU</td>
+        </tr>
+        <tr>
+          <td>1027</td>
+          <td>Abimbola Odumosu</td>
+          <td>29</td>
+          <td>2023-08-18</td>
+          <td>40.7128, -74.0060</td>
+          <td>BRIAND</td>
+        </tr>
+        <tr>
+          <td>1028</td>
+          <td>Chidi Onyekachi</td>
+          <td>46</td>
+          <td>2023-11-23</td>
+          <td>48.8566, 2.3522</td>
+          <td>BRIAND</td>
+        </tr>
+        <tr>
+          <td>1029</td>
+          <td>Obinna Chukwu</td>
+          <td>30</td>
+          <td>2023-10-08</td>
+          <td>37.7749, -122.4194</td>
+          <td>BRIAND</td>
+        </tr>
+        <tr>
+          <td>1030</td>
+          <td>Adofo Mensah</td>
+          <td>44</td>
+          <td>2023-06-03</td>
+          <td>34.052235,-118.243683</td>
+          <td>VIVIVE</td>
+        </tr>
+        <tr>
+          <td>1031</td>
+          <td>Asante Amoako</td>
+          <td>35</td>
+          <td>2023-01-13</td>
+          <td>51.5074, -0.1278</td>
+          <td>VIVIVE</td>
+        </tr>
+        <tr>
+          <td>1032</td>
+          <td>Kwasi Osei</td>
+          <td>53</td>
+          <td>2023-07-04</td>
+          <td>40.7128, -74.0060</td>
+          <td>VIVIVE</td>
+        </tr>
+        <tr>
+          <td>1033</td>
+          <td>Mandla Ndlovu</td>
+          <td>28</td>
+          <td>2023-05-21</td>
+          <td>48.8566, 2.3522</td>
+          <td>ESTNIE</td>
+        </tr>
+        <tr>
+          <td>1034</td>
+          <td>Nkosana Buthelezi</td>
+          <td>36</td>
+          <td>2023-09-26</td>
+          <td>37.7749, -122.4194</td>
+          <td>ESTNIE</td>
+        </tr>
+        <tr>
+          <td>1035</td>
+          <td>Enitan Babatunde</td>
+          <td>25</td>
+          <td>2023-11-14</td>
+          <td>34.052235,-118.243683</td>
+          <td>ESTNIE</td>
+        </tr>
+        <tr>
+          <td>1036</td>
+          <td>Kofi Mensah</td>
+          <td>41</td>
+          <td>2023-08-03</td>
+          <td>51.5074, -0.1278</td>
+          <td>MALALF</td>
+        </tr>
+        <tr>
+          <td>1037</td>
+          <td>Oluchi Nwankwo</td>
+          <td>26</td>
+          <td>2023-03-24</td>
+          <td>40.7128, -74.0060</td>
+          <td>MALALF</td>
+        </tr>
+        <tr>
+          <td>1038</td>
+          <td>Chukwudi Ani</td>
+          <td>48</td>
+          <td>2023-01-01</td>
+          <td>48.8566, 2.3522</td>
+          <td>MALALF</td>
+        </tr>
+        <tr>
+          <td>1039</td>
+          <td>Abeni Adebayo</td>
+          <td>38</td>
+          <td>2023-07-10</td>
+          <td>37.7749, -122.4194</td>
+          <td>FLECHR</td>
+        </tr>
+        <tr>
+          <td>1040</td>
+          <td>Olisa Nnamdi</td>
+          <td>50</td>
+          <td>2023-09-07</td>
+          <td>34.052235,-118.243683</td>
+          <td>FLECHR</td>
+        </tr>
+        <tr>
+          <td>1041</td>
+          <td>Amadi Igwe</td>
+          <td>29</td>
+          <td>2023-11-25</td>
+          <td>51.5074, -0.1278</td>
+          <td>FLECHR</td>
+        </tr>
+        <tr>
+          <td>1042</td>
+          <td>Adofo Mensah</td>
+          <td>52</td>
+          <td>2023-06-18</td>
+          <td>40.7128, -74.0060</td>
+          <td>JUTHEN</td>
+        </tr>
+        <tr>
+          <td>1043</td>
+          <td>Ayodele Adebayo</td>
+          <td>34</td>
+          <td>2023-02-06</td>
+          <td>48.8566, 2.3522</td>
+          <td>JUTHEN</td>
+        </tr>
+        <tr>
+          <td>1044</td>
+          <td>Chinwe Onwuka</td>
+          <td>43</td>
+          <td>2023-10-13</td>
+          <td>37.7749, -122.4194</td>
+          <td>JUTHEN</td>
+        </tr>
+        <tr>
+          <td>1045</td>
+          <td>Jabari Diop</td>
+          <td>33</td>
+          <td>2023-05-03</td>
+          <td>34.052235,-118.243683</td>
+          <td>WALANT</td>
+        </tr>
+        <tr>
+          <td>1046</td>
+          <td>Musa Sow</td>
+          <td>55</td>
+          <td>2023-08-27</td>
+          <td>51.5074, -0.1278</td>
+          <td>WALANT</td>
+        </tr>
+        <tr>
+          <td>1047</td>
+          <td>Nadia Kamara</td>
+          <td>28</td>
+          <td>2023-12-20</td>
+          <td>40.7128, -74.0060</td>
+          <td>WALANT</td>
+        </tr>
+        <tr>
+          <td>1048</td>
+          <td>Mbali Mabaso</td>
+          <td>46</td>
+          <td>2023-07-13</td>
+          <td>48.8566, 2.3522</td>
+          <td>SIMJEN</td>
+        </tr>
+        <tr>
+          <td>1049</td>
+          <td>Aliu Dada</td>
+          <td>39</td>
+          <td>2023-04-04</td>
+          <td>37.7749, -122.4194</td>
+          <td>SIMJEN</td>
+        </tr>
+        <tr>
+          <td>1050</td>
+          <td>Chioma Okafor</td>
+          <td>26</td>
+          <td>2023-11-27</td>
+          <td>34.052235,-118.243683</td>
+          <td>SIMJEN</td>
+        </tr>
+        <tr>
+          <td>1051</td>
+          <td>Olufemi Ojo</td>
+          <td>35</td>
+          <td>2023-02-19</td>
+          <td>51.5074, -0.1278</td>
+          <td>MARPOU</td>
+        </tr>
+        <tr>
+          <td>1052</td>
+          <td>Kwame Danso</td>
+          <td>53</td>
+          <td>2023-07-10</td>
+          <td>40.7128, -74.0060</td>
+          <td>MARPOU</td>
+        </tr>
+        <tr>
+          <td>1053</td>
+          <td>Abena Mensah</td>
+          <td>28</td>
+          <td>2023-05-27</td>
+          <td>48.8566, 2.3522</td>
+          <td>BRIAND</td>
+        </tr>
+        <tr>
+          <td>1054</td>
+          <td>Emeka Nwosu</td>
+          <td>36</td>
+          <td>2023-10-02</td>
+          <td>37.7749, -122.4194</td>
+          <td>BRIAND</td>
+        </tr>
+        <tr>
+          <td>1055</td>
+          <td>Chinwe Okonkwo</td>
+          <td>25</td>
+          <td>2023-11-24</td>
+          <td>34.052235,-118.243683</td>
+          <td>BRIAND</td>
+        </tr>
+        <tr>
+          <td>1056</td>
+          <td>Oluwatobi Adeyemi</td>
+          <td>41</td>
+          <td>2023-08-13</td>
+          <td>51.5074, -0.1278</td>
+          <td>VIVIVE</td>
+        </tr>
+        <tr>
+          <td>1057</td>
+          <td>Ngozi Adebayo</td>
+          <td>32</td>
+          <td>2023-04-02</td>
+          <td>40.7128, -74.0060</td>
+          <td>VIVIVE</td>
+        </tr>
+        <tr>
+          <td>1058</td>
+          <td>Abdoulaye Diop</td>
+          <td>47</td>
+          <td>2023-07-27</td>
+          <td>48.8566, 2.3522</td>
+          <td>VIVIVE</td>
+        </tr>
+        <tr>
+          <td>1059</td>
+          <td>Kwabena Amoah</td>
+          <td>26</td>
+          <td>2023-12-12</td>
+          <td>37.7749, -122.4194</td>
+          <td>ESTNIE</td>
+        </tr>
+        <tr>
+          <td>1060</td>
+          <td>Sekai Ndlovu</td>
+          <td>33</td>
+          <td>2023-06-30</td>
+          <td>34.052235,-118.243683</td>
+          <td>ESTNIE</td>
+        </tr>
+        <tr>
+          <td>1061</td>
+          <td>Obi Eze</td>
+          <td>50</td>
+          <td>2023-01-19</td>
+          <td>51.5074, -0.1278</td>
+          <td>ESTNIE</td>
+        </tr>
+        <tr>
+          <td>1062</td>
+          <td>Adanna Nwachukwu</td>
+          <td>34</td>
+          <td>2023-09-14</td>
+          <td>40.7128, -74.0060</td>
+          <td>MALALF</td>
+        </tr>
+        <tr>
+          <td>1063</td>
+          <td>Kwasi Asante</td>
+          <td>45</td>
+          <td>2023-05-08</td>
+          <td>48.8566, 2.3522</td>
+          <td>MALALF</td>
+        </tr>
+        <tr>
+          <td>1064</td>
+          <td>Nkiru Okafor</td>
+          <td>31</td>
+          <td>2023-11-30</td>
+          <td>37.7749, -122.4194</td>
+          <td>MALALF</td>
+        </tr>
+        <tr>
+          <td>1065</td>
+          <td>Yusuf Afolayan</td>
+          <td>37</td>
+          <td>2023-07-25</td>
+          <td>34.052235,-118.243683</td>
+          <td>FLECHR</td>
+        </tr>
+        <tr>
+          <td>1066</td>
+          <td>Ngozi Okoro</td>
+          <td>48</td>
+          <td>2023-03-05</td>
+          <td>51.5074, -0.1278</td>
+          <td>FLECHR</td>
+        </tr>
+        <tr>
+          <td>1067</td>
+          <td>Obioma Nwosu</td>
+          <td>29</td>
+          <td>2023-10-17</td>
+          <td>40.7128, -74.0060</td>
+          <td>FLECHR</td>
+        </tr>
+        <tr>
+          <td>1068</td>
+          <td>Adama Diop</td>
+          <td>43</td>
+          <td>2023-06-12</td>
+          <td>48.8566, 2.3522</td>
+          <td>JUTHEN</td>
+        </tr>
+        <tr>
+          <td>1069</td>
+          <td>Akua Adjei</td>
+          <td>22</td>
+          <td>2023-02-27</td>
+          <td>37.7749, -122.4194</td>
+          <td>JUTHEN</td>
+        </tr>
+        <tr>
+          <td>1070</td>
+          <td>Olufemi Okeke</td>
+          <td>54</td>
+          <td>2023-08-22</td>
+          <td>34.052235,-118.243683</td>
+          <td>JUTHEN</td>
+        </tr>
+        <tr>
+          <td>1071</td>
+          <td>Yaa Amponsah</td>
+          <td>24</td>
+          <td>2023-04-15</td>
+          <td>51.5074, -0.1278</td>
+          <td>WALANT</td>
+        </tr>
+        <tr>
+          <td>1072</td>
+          <td>Adebayo Adeleke</td>
+          <td>39</td>
+          <td>2023-12-09</td>
+          <td>40.7128, -74.0060</td>
+          <td>WALANT</td>
+        </tr>
+        <tr>
+          <td>1073</td>
+          <td>Chinwe Adebayo</td>
+          <td>33</td>
+          <td>2023-07-03</td>
+          <td>48.8566, 2.3522</td>
+          <td>WALANT</td>
+        </tr>
+        <tr>
+          <td>1074</td>
+          <td>Akua Osei</td>
+          <td>51</td>
+          <td>2023-11-19</td>
+          <td>37.7749, -122.4194</td>
+          <td>SIMJEN</td>
+        </tr>
+        <tr>
+          <td>1075</td>
+          <td>Emeka Okoli</td>
+          <td>26</td>
+          <td>2023-06-16</td>
+          <td>34.052235,-118.243683</td>
+          <td>SIMJEN</td>
+        </tr>
+        <tr>
+          <td>1076</td>
+          <td>Obinna Eze</td>
+          <td>45</td>
+          <td>2023-01-07</td>
+          <td>51.5074, -0.1278</td>
+          <td>SIMJEN</td>
+        </tr>
+        <tr>
+          <td>1077</td>
+          <td>Abena Kwame</td>
+          <td>36</td>
+          <td>2023-08-02</td>
+          <td>40.7128, -74.0060</td>
+          <td>LISHOL</td>
+        </tr>
+        <tr>
+          <td>1078</td>
+          <td>Oluchi Nnamdi</td>
+          <td>27</td>
+          <td>2023-04-25</td>
+          <td>48.8566, 2.3522</td>
+          <td>LISHOL</td>
+        </tr>
+        <tr>
+          <td>1079</td>
+          <td>Chidinma Chukwu</td>
+          <td>49</td>
+          <td>2023-11-11</td>
+          <td>37.7749, -122.4194</td>
+          <td>LISHOL</td>
+        </tr>
+        <tr>
+          <td>1080</td>
+          <td>Enitan Afolayan</td>
+          <td>35</td>
+          <td>2023-06-27</td>
+          <td>34.052235,-118.243683</td>
+          <td>MARPOU</td>
+        </tr>
+        <tr>
+          <td>1081</td>
+          <td>Kwabena Acheampong</td>
+          <td>28</td>
+          <td>2023-02-10</td>
+          <td>51.5074, -0.1278</td>
+          <td>MARPOU</td>
+        </tr>
+        <tr>
+          <td>1082</td>
+          <td>Nkiruka Chukwu</td>
+          <td>53</td>
+          <td>2023-07-22</td>
+          <td>40.7128, -74.0060</td>
+          <td>MARPOU</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th>PatientID</th>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Vaccinated</th>
+          <th>Longitude/Latitude</th>
+          <th>Note to nurse</th>
+        </tr>
+      </tfoot>
+    </table>
+
+    <div class="buttons">
+      <button onclick="saveChanges()">Save Changes</button>
+      <button onclick="toggleForm()">New Patient</button>
+    </div>
+
+    <div id="patientForm" style="display: none">
+      <h2>New Patient Form</h2>
+      <form>
+        <label for="patientID">Patient ID:</label>
+        <input
+          type="text"
+          id="patientID"
+          name="patientID"
+          required
+        /><br /><br />
+
+        <label for="firstName">First Name:</label>
+        <input
+          type="text"
+          id="firstName"
+          name="firstName"
+          required
+        /><br /><br />
+
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName" required /><br /><br />
+
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required /><br /><br />
+
+        <label for="vaccinatedDate">Vaccinated Date:</label>
+        <input
+          type="date"
+          id="vaccinatedDate"
+          name="vaccinatedDate"
+          required
+        /><br /><br />
+
+        <label for="note">Note to Nurse:</label><br />
+        <textarea id="note" name="note" rows="4" cols="50"></textarea
+        ><br /><br />
+
+        <button id="submitButton" onclick="submitForm()" disabled>
+          Submit
+        </button>
+      </form>
+    </div>
+
+    <footer class="footer2">Bandim Health Project © 2021</footer>
+
+    <script>
+      new DataTable("#patients");
+    </script>
+
+    <script>
+      function toggleForm() {
+        let form = document.getElementById("patientForm");
+        form.style.display = form.style.display === "none" ? "block" : "none";
+      }
+
+      function checkForm() {
+        return Array.from(
+          document.querySelectorAll(
+            "#patientForm input[required], #patientForm textarea[required]"
+          )
+        ).every((input) => input.value.trim() !== "");
+      }
+
+      function submitForm() {
+        if (checkForm()) {
+          alert("New patient has been added successfully");
+          toggleForm();
+          return;
+        }
+      }
+
+      function saveChanges() {
+        console.log(
+          "Content to be saved:",
+          document.getElementById("editable").innerHTML
+        );
+        alert("Changes saved successfully");
+      }
+
+      document.addEventListener("input", () => {
+        document.getElementById("submitButton").disabled = !checkForm();
+      });
+    </script>
+
+<script>
+  function logout() {
+    window.location.href = "../templates/login2.html";
+  }
+</script>
+  </body>
+</html>
