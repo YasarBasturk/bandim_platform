@@ -50,6 +50,18 @@ body {
   text-align: center;
 }
 
+.responseError {
+  color: red;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+}
+
+.responseError2 {
+  color: rgb(72, 255, 0);
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+}
+
 .footer {
   background-color: #50c878;
   height: 75px;
