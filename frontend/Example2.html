@@ -131,7 +131,20 @@
               }
             );
             const data = await response.json();
-            accessToken = data.access_token; // Save the access token
+            if (response.ok) {
+            localStorage.setItem("accessToken", data.access_token);
+            localStorage.setItem("refreshToken", data.refresh_token);
+            responseDisplay.textContent = JSON.stringify(data, null, 2);
+            responseDisplay.textContent += "\n\nRedirecting to the internal dashboard...";
+            // Redirect to the next (internal) page after waiting 2000 
+            // miliseconds = 2 seconds
+            setTimeout(() => {
+              window.location.href = '/frontend/index.html';
+            }, 2000);
+          } else {
+            throw new Error(data.message || "Login failed");
+          }
+            //accessToken = data.access_token; // Save the access token
             //responseDisplay.textContent = JSON.stringify(data, null, 2);
           } catch (error) {
             responseDisplay.textContent = "Login failed: " + error.message;
