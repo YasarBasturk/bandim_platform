@@ -32,6 +32,18 @@ body {
   margin-top: 20px;
 }
 
+.get-token {
+  display: block;
+  width: 17%;
+  background-color: #559c67;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+}
+
 .button-container .get-token {
   background-color: #50c878;
 }
@@ -61,6 +73,20 @@ body {
   font-family: Arial, sans-serif;
   font-weight: bold;
 }
+
+.custom-text-style {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  color: blue; /* Change the color as needed */
+  /* Add any other styles you want to apply */
+}
+
+#userDataHeader {
+  font-family: Arial, sans-serif;
+  font-size: 18px; /* Adjust the font size as needed */
+  /* Add any other styles you want to apply */
+}
+
 
 .footer {
   background-color: #50c878;

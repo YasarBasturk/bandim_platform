@@ -37,10 +37,10 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
-            <a class="nav-link active" aria-current="page" href="../templates/index.html">Routing</a>
-            <a class="nav-link" href="../frontend/coworkers.html">Coworkers</a>
-            <a class="nav-link" href="../frontend/patients.html">Patients</a>
-            <a class="nav-link" href="../frontend/guidelines.html">Guidelines/Contact</a>
+            <a class="nav-link active" aria-current="page" href="index.html">Routing</a>
+            <a class="nav-link" href="coworkers.html">Coworkers</a>
+            <a class="nav-link" href="patients.html">Patients</a>
+            <a class="nav-link" href="guidelines.html">Guidelines/Contact</a>
 
             <button type="button" class="btn btn-logout d-lg-none" onclick="logout()">Logout</button>
           </div>
@@ -77,6 +77,10 @@
     </div>
   </div>
 
+  <h6 id="userDataHeader">Retrieve User Data</h2>
+    <button id="fetchUserData" class="get-token">Fetch User Data</button>
+    <pre id="responseDisplay"></pre>
+
     <footer class="footer2">Bandim Health Project © 2021</footer>
 
     <script>
@@ -108,8 +112,41 @@
     
 <script>
   function logout() {
-    window.location.href = "../templates/login2.html";
+    window.location.href = "Example2.html";
   }
+
+  document.addEventListener("DOMContentLoaded", function () {
+        // Api key for local development
+        // const apiKey = "a6bf09ec-09a5-4e2d-a142-43e77e87b3d0";
+        // Api key for access to public api at localhost
+        const apiKey =
+          "sp7b0JE3tg6RnhFRVsLVE1Vdsv2o7Riu12qlPHbcAOZPit30PdtIPWNi7gFDOahAB6GWilxWXik7qe5i4CLytIDaUwDOp4LnP00ZrdHS34YqKnXQAfp15TjQjWC3AHGP";
+        
+        const responseDisplay = document.getElementById("responseDisplay");
+        const fetchUserDataButton = document.getElementById("fetchUserData");
+
+        async function getUserAccountData() {
+          const accessToken = localStorage.getItem("accessToken");
+          try {
+            const response = await fetch(`https://bandim.infonest.xyz/api/public/users/me`, {
+              method: "GET",
+              mode: "cors",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${accessToken}`,
+                "X-API-Key": apiKey,
+              },
+            });
+            const data = await response.json();
+            responseDisplay.textContent = "User data retrieved" //JSON.stringify(data, null, 2);
+            responseDisplay.classList.add("custom-text-style");
+          } catch (error) {
+            responseDisplay.textContent = "Failed to fetch user data: " + error.message;
+          }
+        }
+
+        fetchUserDataButton.addEventListener("click", getUserAccountData);
+      });
 </script>
   </body>
 </html>

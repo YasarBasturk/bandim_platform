@@ -38,8 +38,6 @@
           <button id="createNewUser" class="create-button">Create User</button>
           <div id="errorMessage" style="display: none; color: red"></div>
         </div>
-        <button id="fetchUserData" class="get-token">Fetch User Data</button>
-      </div>
     </div>
 
     <script>
@@ -55,7 +53,6 @@
         const registerButton = document.getElementById("registerButton");
         const createNewUserButton = document.getElementById("createNewUser");
         const loginButton = document.getElementById("login");
-        const fetchUserDataButton = document.getElementById("fetchUserData");
         const responseDisplay = document.getElementById("responseDisplay");
         const registerForm = document.getElementById("registerForm");
 
@@ -133,9 +130,8 @@
             const data = await response.json();
             if (response.ok) {
             localStorage.setItem("accessToken", data.access_token);
-            localStorage.setItem("refreshToken", data.refresh_token);
-            responseDisplay.textContent = JSON.stringify(data, null, 2);
-            responseDisplay.textContent += "\n\nRedirecting to the internal dashboard...";
+            //responseDisplay.textContent = JSON.stringify(data, null, 2);
+            responseDisplay.textContent += "\n\nRedirecting to the internal dashboard..."; //****** SKAL IKKE STÅ UNDER REGISTER, SKAL KOMME UNDER PASSWORD
             // Redirect to the next (internal) page after waiting 2000 
             // miliseconds = 2 seconds
             setTimeout(() => {
@@ -147,30 +143,7 @@
             //accessToken = data.access_token; // Save the access token
             //responseDisplay.textContent = JSON.stringify(data, null, 2);
           } catch (error) {
-            responseDisplay.textContent = "Login failed: " + error.message;
-          }
-        }
-
-        // Function to get user account data using the access token
-        async function getUserAccountData() {
-          try {
-            const response = await fetch(
-              `https://bandim.infonest.xyz/api/public/users/me`,
-              {
-                method: "GET",
-                mode: "cors",
-                headers: {
-                  "Content-Type": "application/json",
-                  Authorization: `Bearer ${accessToken}`,
-                  "X-API-Key": `${apiKey}`,
-                },
-              }
-            );
-            const data = await response.json();
-            //responseDisplay.textContent = JSON.stringify(data, null, 2);
-          } catch (error) {
-            responseDisplay.textContent =
-              "Failed to get user account data: " + error.message;
+            responseDisplay.textContent =  error.message; //****** SKAL IKKE STÅ UNDER REGISTER, SKAL KOMME UNDER PASSWORD
           }
         }
 
@@ -187,7 +160,6 @@
           loginAndGetTokens(username, password);
         });
 
-        fetchUserDataButton.addEventListener("click", getUserAccountData);
       });
     </script>
 
