@@ -56,25 +56,28 @@
 
       <select id="routes"></select>
 
-      <p style="font-size: 18px; margin-top: 18px; font-family: 'Times New Roman', Times, serif;"> Estimated distance: X km </p>
-      <p style="font-size: 18px; font-family: 'Times New Roman', Times, serif;"> Stops: Y </p>
-      <p style="font-size: 18px; font-family: 'Times New Roman', Times, serif;"> Estimated time: HH:MM </p>
-      <p style="font-size: 18px; font-family: 'Times New Roman', Times, serif;"> yyyy-mm-dd patientlist: </p>
-      <p style="font-family: 'Times New Roman', Times, serif;"> Patient 1 </p>
-      <p style="font-family: 'Times New Roman', Times, serif;"> Patient 2 </p>
-      <p style="font-family: 'Times New Roman', Times, serif;"> Patient 3 </p>
-      <p style="font-family: 'Times New Roman', Times, serif;"> Patient n </p>
     </div>
-    
-      <iframe
-      class="googleMap"
-      src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d244.05334781588553!2d-15.595631676462247!3d11.84552212870657!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sda!2sdk!4v1710036431720!5m2!1sda!2sdk"
-      style="border: 0"
-      allowfullscreen=""
-      loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade"
-    ></iframe>
     </div>
+  </div>
+
+  <div id="myDIV" class="header">
+    <h2>Location list</h2>
+    <div class="input-container">
+      <input type="text" id="myInput1" placeholder="latitude" />
+      <input type="text" id="myInput2" placeholder="longitude" />
+      <input type="text" id="myInput3" placeholder="demand" />
+      <input type="text" id="myInput4" placeholder="depot" />
+      <button id="add-location">Add</button>
+    </div>
+
+
+    <ul id="myUL">
+      <!-- Display some dummy data for illustrational purposes  -->
+      <li>{ "latitude": 1, "longitude": 0}</li>
+    </ul>
+
+      <button id="submit-location-data">Send Request to Backend</button>
+      <button id="clear-location-data">Clear Location List</button>
   </div>
 
   <h6 id="userDataHeader">Retrieve User Data</h2>
@@ -148,5 +151,123 @@
         fetchUserDataButton.addEventListener("click", getUserAccountData);
       });
 </script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Retrieve access token
+    const accessToken = localStorage.getItem("accessToken");
+    const apiKey = "sp7b0JE3tg6RnhFRVsLVE1Vdsv2o7Riu12qlPHbcAOZPit30PdtIPWNi7gFDOahAB6GWilxWXik7qe5i4CLytIDaUwDOp4LnP00ZrdHS34YqKnXQAfp15TjQjWC3AHGP";
+
+    // Create a submission button, that when clicked sends the data to the backend
+    const submitButton = document.getElementById("submit-location-data");
+    // Create a clear button that clears the whole list of locations
+    const clearButton = document.getElementById("clear-location-data")
+    const addButton = document.getElementById("add-location");
+
+    // Create a 'global' list that will contain the (current) list of lications
+    // To send to the backend
+    var locationList = [];
+
+    //Create a "close" button and append it to each list item
+    var myNodelist = document.getElementsByTagName("LI");
+    var i;
+    for (i = 0; i < myNodelist.length; i++) {
+      var span = document.createElement("SPAN");
+      var txt = document.createTextNode("\u00D7");
+      span.className = "close";
+      span.appendChild(txt);
+      myNodelist[i].appendChild(span);
+    }
+
+    // Click on a close button to hide the current list item
+    var close = document.getElementsByClassName("close");
+    var i;
+    for (i = 0; i < close.length; i++) {
+      close[i].onclick = function () {
+        var div = this.parentElement;
+        div.style.display = "none";
+        };
+      }
+
+    async function createLocations(locations) {
+      try {
+        const response = await fetch(
+          `https://bandim.infonest.xyz/api/public/locations/bulk_insert`,
+          {
+            method: "POST",
+            mode: "cors",
+            headers: {
+              "Content-type": "application/json",
+              Authorization: `Bearer ${accessToken}`,
+              "X-API-Key": apiKey,
+            },
+            // TESTING HERE
+            body: JSON.stringify(locationList),
+          }
+        );
+        const data = await response.json();
+        responseDisplay.textContent = JSON.stringify(data, null, 2);
+      } catch (error) {
+        responseDisplay.textContent =
+        "Failed to insert location data: " + error.message;
+      }
+    }
+
+    // Create a new list item when clicking on the "Add" button
+    function newElement() {
+      var li = document.createElement("li");
+      var inputValue1 = document.getElementById("myInput1").value;
+      var inputValue2 = document.getElementById("myInput2").value;
+
+      // Add new input data to list of locations:
+      // - Latitude: float
+      // - Longitude: float
+      // - demand: int (TODO)
+      // - depot: bool (TODO)
+
+      latlon = { latitude: inputValue1, longitude: inputValue2 };
+      locationList.push(latlon);
+
+      // Add each new item in the web interface
+      var t = document.createTextNode(JSON.stringify(latlon));
+      li.appendChild(t);
+
+      // Check that the input value is not empty
+      if (inputValue1 === "") {
+          alert("You must write something!");
+      } else {
+          document.getElementById("myUL").appendChild(li);
+      }
+      document.getElementById("myInput1").value = "";
+      document.getElementById("myInput2").value = "";
+
+      var span = document.createElement("SPAN");
+      var txt = document.createTextNode("\u00D7");
+      span.className = "close";
+      span.appendChild(txt);
+      li.appendChild(span);
+
+      for (i = 0; i < close.length; i++) {
+        close[i].onclick = function () {
+          var div = this.parentElement;
+          div.style.display = "none";
+        };
+      }
+    }
+
+    function clearLocations() {
+      // Reset the list of locations
+      locationList = [];
+      // Clear list in the webinterface
+      document.getElementById("myUL").innerHTML = "";
+    }
+
+    // Event listeners for the buttons
+    submitButton.addEventListener("click", createLocations);
+    clearButton.addEventListener("click", clearLocations);
+    addButton.addEventListener("click", newElement);
+  });
+</script>
+
   </body>
 </html>

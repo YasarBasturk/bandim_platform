@@ -87,6 +87,58 @@ body {
   /* Add any other styles you want to apply */
 }
 
+#add-location,
+#submit-location-data,
+#clear-location-data {
+  display: block;
+  width: 10%;
+  background-color: #559c67;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+#submit-location-data {
+  background-color: #50c878;
+}
+
+#add-location:hover,
+#submit-location-data:hover,
+#clear-location-data:hover {
+  background-color: #218838;
+}
+
+.header h2 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+}
+
+.input-container input,
+.input-container button {
+  margin-right: 5px;
+  height: 30px;
+}
+
+#add-location {
+  height: 40px;
+}
+
 
 .footer {
   background-color: #50c878;
