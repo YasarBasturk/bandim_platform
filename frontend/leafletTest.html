@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaflet</title>
+
+    <!-- // leaflet css  -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        #map {
+            width: 100%;
+            height: 100vh;
+        }
+        /* Adjust route describer size */
+        .leaflet-routing-container-description {
+            font-size: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+</body>
+
+</html>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+<script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+
+
+<script>
+    // Map initialization
+    var map = L.map('map').setView([11.845635991962888, -15.595599489958094], 18);
+
+   //osm layer
+    var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }); 
+    osm.addTo(map);
+
+    var Stadia_AlidadeSatellite = L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_satellite/{z}/{x}/{y}{r}.{ext}', {
+	minZoom: 0,
+	maxZoom: 20,
+	attribution: '&copy; CNES, Distribution Airbus DS, © Airbus DS, © PlanetObserver (Contains Copernicus Data) | &copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+	ext: 'jpg'
+
+});
+Stadia_AlidadeSatellite.addTo(map)
+
+       // Custom red icon
+       var redIcon = L.icon({
+            iconUrl: 'static/images/red_icon.png',
+            iconSize: [40, 40], // size of the icon
+        });
+
+        // Marker with custom red icon
+        var singleMarker = L.marker([11.845635991962888, -15.595599489958094], {icon: redIcon}).addTo(map);
+        var popup = singleMarker.bindPopup("Headquarter").openPopup();
+        popup.addTo(map);
+
+// Routing control
+var control = L.Routing.control({
+            waypoints: [
+                L.latLng(11.845635991962888, -15.595599489958094),
+                L.latLng(11.845845342751618, -15.595708789971104),
+                L.latLng(11.846162978113133, -15.595518353130991),
+                L.latLng(11.8463362336092, -15.59479683890577),
+                L.latLng(11.845763965037568, -15.594531300213218),
+                L.latLng(11.845475205211482, -15.594944360401632)
+            ],
+            routeWhileDragging: true
+        }).addTo(map);
+
+// Add event listener to toggle route describer visibility when clicking on map
+map.on('click', function() {
+    if (control._container.style.display === 'none') {
+        control._container.style.display = 'block';
+    } else {
+        control._container.style.display = 'none';
+    }
+});
+</script>

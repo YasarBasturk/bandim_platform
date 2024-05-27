@@ -34,7 +34,7 @@ body {
 
 .get-token {
   display: block;
-  width: 17%;
+  width: 10%;
   background-color: #559c67;
   color: #fff;
   border: none;
@@ -42,6 +42,11 @@ body {
   border-radius: 5px;
   cursor: pointer;
   text-align: center;
+  margin-left: 10px;
+}
+
+#myDIV h2 {
+  margin-left: 10px;
 }
 
 .button-container .get-token {
@@ -85,6 +90,7 @@ body {
   font-family: Arial, sans-serif;
   font-size: 18px; /* Adjust the font size as needed */
   /* Add any other styles you want to apply */
+  margin-left: 10px;
 }
 
 #add-location,
@@ -100,6 +106,7 @@ body {
   cursor: pointer;
   margin-top: 10px;
   margin-bottom: 20px;
+  margin-left: 10px;
 }
 
 #submit-location-data {
@@ -133,10 +140,12 @@ body {
 .input-container button {
   margin-right: 5px;
   height: 30px;
+  margin-left: 10px;
 }
 
 #add-location {
   height: 40px;
+  width: 90px;
 }
 
 
@@ -213,7 +222,7 @@ body {
   background-color: #50c878;
   height: 75px;
   width: 100%;
-  position: relative;
+  position: absolute;
   bottom: 0;
   text-align: center;
   line-height: 75px;
@@ -344,4 +353,23 @@ body {
 
 #responseDisplay {
   padding-top: 30px;
+}
+
+
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+  #map-container {
+      width: 100%;
+      top: 100px; /* Adjust according to the height of your header */
+      bottom: 100px; /* Adjust according to the height of your footer */
+  }
+
+  #map {
+      height: calc(100% - 200px); /* Adjust according to the combined height of your header and footer */
+  }
+
+  #content-container {
+      margin-right: 0;
+      padding: 20px;
+  }
 }
