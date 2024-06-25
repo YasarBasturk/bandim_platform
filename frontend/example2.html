@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Requests Example: Internal Functionalities</title>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Api key for local development
+        // const apiKey = "a6bf09ec-09a5-4e2d-a142-43e77e87b3d0";
+        // Api key for access to public api at localhost
+        const apiKey =
+          "sp7b0JE3tg6RnhFRVsLVE1Vdsv2o7Riu12qlPHbcAOZPit30PdtIPWNi7gFDOahAB6GWilxWXik7qe5i4CLytIDaUwDOp4LnP00ZrdHS34YqKnXQAfp15TjQjWC3AHGP";
+        
+        const responseDisplay = document.getElementById("responseDisplay");
+        const fetchUserDataButton = document.getElementById("fetchUserData");
+
+        async function getUserAccountData() {
+          const accessToken = localStorage.getItem("accessToken");
+          try {
+            const response = await fetch(`https://bandim.infonest.xyz/api/public/users/me`, {
+              method: "GET",
+              mode: "cors",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${accessToken}`,
+                "X-API-Key": apiKey,
+              },
+            });
+            const data = await response.json();
+            responseDisplay.textContent = JSON.stringify(data, null, 2);
+          } catch (error) {
+            responseDisplay.textContent = "Failed to fetch user data: " + error.message;
+          }
+        }
+
+        fetchUserDataButton.addEventListener("click", getUserAccountData);
+      });
+    </script>
+</head>
+<body>
+    <h2>Retrieve User Data</h2>
+    <button id="fetchUserData">Fetch User Data</button>
+    <pre id="responseDisplay"></pre>
+</body>
+</html>
