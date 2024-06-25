@@ -337,23 +337,45 @@ Stadia_AlidadeSatellite.addTo(map)
 
 
 // Routing control
-var control = L.Routing.control({
+var control1 = L.Routing.control({
             waypoints: [
                 L.latLng(11.845635991962888, -15.595599489958094),
-                L.latLng(11.845845342751618, -15.595708789971104),
-                L.latLng(11.846162978113133, -15.595518353130991),
-                L.latLng(11.8463362336092, -15.59479683890577),
-                L.latLng(11.845763965037568, -15.594531300213218),
-                L.latLng(11.845475205211482, -15.594944360401632)
+                L.latLng(11.846032170742008, -15.595756163217484),
+                L.latLng(11.846688441294464, -15.595554997541308),
+                L.latLng(11.847363085803012, -15.594903220750773),
+                L.latLng(11.847583591815082, -15.593892027952156),
+                L.latLng(11.847113703790924, -15.593216111280425)
+
             ],
-            routeWhileDragging: true
+            routeWhileDragging: true,
+            lineOptions: {
+              styles: [{color:'red', opacity: 1, weight: 3}]
+            }
         }).addTo(map);
 
-map.on('click', function() {
-    if (control._container.style.display === 'none') {
-        control._container.style.display = 'block';
-    } else {
-        control._container.style.display = 'none';
-    }
-});
+  var control2 = L.Routing.control({
+              waypoints: [
+                L.latLng(11.845635991962888, -15.595599489958094),
+                L.latLng(11.844631893498677, -15.595954882659733),
+                L.latLng(11.844049120939275, -15.596255290063564),
+                L.latLng(11.84421187736476, -15.597113596931642),
+                L.latLng(11.844715896647974, -15.597660767560042)
+
+            ],
+            routeWhileDragging: true,
+            lineOptions: {
+              styles: [{color:'blue', opacity: 1, weight: 3}]
+            }
+        }).addTo(map);
+
+        map.on('click', function() {
+            var controlContainers = [control1._container, control2._container];
+            controlContainers.forEach(function(container) {
+                if (container.style.display === 'none') {
+                    container.style.display = 'block';
+                } else {
+                    container.style.display = 'none';
+                }
+            });
+        });
 </script>
